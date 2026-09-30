@@ -27,28 +27,7 @@ La arquitectura debe permitir agregar nuevos componentes sin necesidad de recons
 
 La primera versión del laboratorio estará compuesta por una única máquina virtual.
 
-```text
-                         HOST
-                          │
-                          │
-                      VirtualBox
-                          │
-                          ▼
-                 ┌─────────────────┐
-                 │   srv-linux01   │
-                 │                 │
-                 │ Ubuntu Server   │
-                 │ 26.04 LTS       │
-                 │                 │
-                 │ 2 vCPU          │
-                 │ 2 GB RAM        │
-                 │ 25 GB Disk      │
-                 └────────┬────────┘
-                          │
-                          │ NAT
-                          ▼
-                       Internet
-```
+![Representacion de la arquitectura](./architecture.png)
 
 # 3. Maquina virtual inicial
 
