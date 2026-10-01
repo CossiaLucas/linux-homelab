@@ -682,7 +682,50 @@ ls -l /opt/syslab
     total 0
     -rw-rw-r-- labuser syslab 0 Oct 1 01:17 prueba-setgit.txt
     -rw-rw-r-- labuser labuser 0 Oct 1 00:50 prueba.txt
+```
+
+Hasta ahora `labuser` es el propietario del directorio: `labuser:syslab`
+
+y tiene: `rwx`
+
+Mientras que el grupo syslab tiene: `r-x`
+
+El problema es que todavía no tenemos otro usuario utilizando ese grupo. Así que vamos a crear un segundo usuario de laboratorio `:)`.
+
+### 3.4 Acceso mediante un grupo compartido
+
+Creamos al usuario:
+
+``` bash
+sudo useradd -m -s /bin/bash devuser
+sudo passwd devuser
+sudo usermod -aG syslab devuser
+id devuser
+    uid=1002(devuser) gid=1003(devuser) groups=1003(devuser),1002(syslab)
+```
+
+Ahora podemos comprobar el acceso
+
+``` bash
+su - devuser
+whoami
+    devuser
+id
+    uid=1002(devuser) gid=1003(devuser) groups=1003(devuser),1002(syslab) #Pertenece al grupo syslab
+cd /opt/syslab
+ls -l
+    total 0
+    -rw-rw-r-- labuser syslab 0 Oct 1 01:17 prueba-setgit.txt
+    -rw-rw-r-- labuser labuser 0 Oct 1 00:50 prueba.txt
 ``` 
+
+Ahora si realizamos
+
+``` bash
+touch prueba-devuser.txt
+    touch: cannot touch ´prueba-devuser.txt´ : permission denied
+``` 
+
 
 ## 4. Sistema de archivos
 
