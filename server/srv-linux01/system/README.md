@@ -444,7 +444,245 @@ sudo passwd -u labuser
 
 De esta manera podemos deshabilitar temporalmente la autenticación mediante la clave de una cuenta sin eliminarla, lo que puede utilizarse como una forma de baja lógica.
 
-## 3. Privilegios y sudo
+## 3. Permisos, propietarios y grupos
+
+En Linux, cada archivo y directorio tiene principalmente:
+* un propietario;
+* un grupo propietario;
+* permisos para el propietario;
+* permisos para el grupo;
+* permisos para otros usuarios.´
+
+Vamos a trabajar con labuser y el grupo syslab que ya creamos.
+
+Primero vamos a crear un directorio destinado a nuestras pruebas:
+
+``` bash
+sudo mkdir /opt/syslab
+```
+
+El motivo es que `/opt` es un lugar apropiado para software o recursos adicionales del sistema. En nuestro caso lo utilizaremos simplemente como un recurso de laboratorio. Ahora verificamos cómo quedó:
+
+``` bash
+ls -ld /opt/syslab
+```
+
+``` text
+drwxr-xr-x 2 root root 4096 Oct 1 00:09
+```
+
+Aca podemos hacer un analisis basico de permisos:
+
+* Primero. Un analisis completo de la sintaxis
+
+* `d`           → directorio
+* `rwx`         → permisos del propietario
+* `r-x`         → permisos del grupo
+* `r-x`         → permisos de otros
+* `2`           → cantidad de enlaces
+* `root`        → propietario
+* `root`        → grupo propietario
+* `4096`        → tamaño
+* `Oct 1 00:09` → fecha de modificación
+* `/opt/syslab` → ruta
+
+* Segundo. Tenemos 3 grupos de 3 tipos de permisos
+
+    rwx - Propietario
+
+    r-x - Grupo
+
+    r-x - Otros
+
+| Permiso | Significado |
+|---|---|
+| `r` | read — lectura |
+| `w` | write — escritura |
+| `x` | execute — ejecución |
+
+### 3.1 Cambiar propietarios
+
+El comando `chown` significa **Change owner**
+
+``` bash
+sudo chown labuser /opt/syslab
+```
+
+Y lo verificamos 
+
+``` bash
+ls -ld /opt/syslab
+```
+
+``` text
+drwxr-xr-x 2 labuser root 4096 Oct 1 00:09
+```
+
+Y despues esta el comando `chgrp` que significa **Change group**
+
+``` bash
+sudo chgrp syslab /opt/syslab
+```
+
+Y lo verificamos 
+
+``` bash
+ls -ld /opt/syslab
+```
+
+``` text
+drwxr-xr-x 2 labuser syslab 4096 Oct 1 00:09
+```
+
+También podríamos haber realizado ambas operaciones mediante `chown`:
+
+``` bash
+sudo chown labuser:syslab /opt/syslab
+```
+
+### 3.2 Modificacion de permisos
+
+En esta seccion vamos a usar `chmod`
+
+Primero vamos a explicar otras cosas de los permisos.
+
+* `r = 4`
+* `w = 2`
+* `x = 1`
+
+Por ende, tenemos que sacar cuentas como:
+
+7 = 4 + 2 + 1 = rwx
+
+5 = 4 + 0 + 1 = r-x
+
+0 = 0 + 0 + 0 = ---
+
+| Valor | Permisos |
+|---:|---|
+| `7` | `rwx` |
+| `6` | `rw-` |
+| `5` | `r-x` |
+| `4` | `r--` |
+| `3` | `-wx` |
+| `2` | `-w-` |
+| `1` | `--x` |
+| `0` | `---` |
+
+| Usuario | Permisos |
+|---|---|
+| `labuser` | `rwx` |
+| grupo `syslab` | `r-x` |
+| otros | `---` |
+
+Entonces si realizamos una practica como:
+
+1. Crear el directorio
+
+2. Verificarlo
+
+3. Ver información detallada
+
+4. Cambiar propietario
+
+5. Cambiar grupo
+
+6. Verificar
+
+7. Aplicar permisos
+
+8. Verificamos nuevamente
+
+![Practica de permisos](../../../screenshots/system/img04.png)
+
+### 3.3 Interaccion entre usuarios, grupos y permisos
+
+Vamos a empezar con unos comandos
+
+``` bash
+su - labuser
+whoami
+    labuser
+cd /opt/syslab
+pwd
+    /opt/syslab
+touch prueba.txt
+ls -l
+    total 0
+    -rw-rw-r-- 1 labuser labuser 0 Oct 1 00:50 prueba.txt
+```
+
+Aca detectamos una situacion interesante. Aunque el directorio `/opt/syslab` tiene como grupo propietario a `syslab`, el archivo nuevo quedó con el grupo `labuser`.
+
+Esto ocurre porque un directorio no hereda automáticamente su grupo propietario a los archivos nuevos que se crean dentro de él.
+Por defecto, el nuevo archivo utiliza el grupo principal del usuario que lo crea.
+
+Si ejecutamos:
+
+``` bash
+umask
+```
+
+Vamos a recibir:
+
+``` text
+0002
+```
+
+La `umask` determina qué permisos se eliminan de los permisos iniciales al crear archivos y directorios. En nuestro caso, el valor `0002` contribuyó a que el archivo se creara con permisos `664` (rw-rw-r--).
+El grupo propietario del archivo es un aspecto diferente y, en este caso, corresponde al grupo principal de labuser.
+
+Y esto nos lleva a una herramienta muy interesante de Linux: `setgid`. En un directorio, setgid hace que los nuevos archivos y subdirectorios creados dentro de él hereden el grupo propietario del directorio.
+
+Primero vamos a salir con `exit`. Despues comprobamos...
+
+``` bash
+ls -ld /opt/syslab
+    drwxr-x--- 2 labuser syslab 4096 Oct 1 00:50 /opt/syslab
+ls -l /opt/syslab
+    total0
+    -rw-rw-r-- 1 labuser labuser 0 Oct 1 00:50 preuba.txt
+```
+
+Esta situacion se puede solucionar con `setgid`.
+
+Actualmente tenemos:
+| Ubicacion | dueño:grupo |
+|---|---|
+| `Directorio` | `labuser:syslab` |
+| `Archivo` | `labuser:labuser` |
+
+Pero, por ejemplo, si `syslab` representa un **equipo de trabajo**. Queremos que los archivos creados dentro de `/opt/syslab` pertenezcan automáticamente al grupo: `syslab`
+
+Para eso podemos utilizar `setgid` en el directorio.
+
+``` bash
+sudo chmod g+s /opt/syslab
+```
+
+> El g+s significa que estamos activando el bit setgid para el grupo del directorio.
+
+Y lo comprobamos:
+
+``` bash
+ls -ld /opt/syslab
+    drwxr-s--- 2 labuser syslab 4096 Oct 1 00:50 /opt/syslab
+```
+
+Antes en los permisos de grupo teniamos `r-x`. Pero ahora tenemos `r-s`. Esa `"s"` significa que `setgid` esta *activo*.
+
+Ahora vamos a crear otro archivo:
+
+``` bash
+su - labuser
+whoami
+    labuser
+touch /opt/syslab/prueba-setgid.txt
+ls -l /opt/syslab
+    total 0
+    -rw-rw-r-- labuser syslab 0 Oct 1 01:17 prueba-setgit.txt
+    -rw-rw-r-- labuser labuser 0 Oct 1 00:50 prueba.txt
+``` 
 
 ## 4. Sistema de archivos
 
