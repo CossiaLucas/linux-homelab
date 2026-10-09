@@ -23,7 +23,7 @@ Practicar:
 
 # Administración del sistema
 
-## 1. Actualización del sistema
+## **1. Actualización del sistema**
 
 Primero vamos a realizar una actualizacion de paquetes y librerias para que todo funcione correctamente. Esto lo podemos realizar con.
 
@@ -43,7 +43,9 @@ sudo apt upgrade
 
 ![Respuesta del upgrade](../../../screenshots/system/img02.png)
 
-## 2. Usuarios y grupos
+---
+
+## **2. Usuarios y grupos**
 
 Antes de comenzar a crear y modificar usuarios, se identificó la cuenta utilizada actualmente en `srv-linux01`.
 
@@ -77,7 +79,7 @@ Y el GID corresponda al grupo lucacoss.
 
 * grupos secundarios.
 
-### 2.1 Grupos 
+### **2.1 Grupos **
 
 Tambien podemos ver los grupos a los que pertenece nuestro usuario. Mediante el comando.
 
@@ -128,7 +130,7 @@ Grupo general de usuarios.
 
 * `lxd`
 
-### 2.2 Informacion adicional
+### **2.2 Informacion adicional**
 
 Posteriormente, para consultar la información de la cuenta se utilizó:
 
@@ -159,7 +161,7 @@ Para nosotros:
 | Home              | `/home/lucacoss` |
 | Shell             | `/bin/bash`      |
 
-### 2.3 `/etc/passwd`
+### **2.3 `/etc/passwd`**
 
 El archivo `/etc/passwd` contiene información básica sobre las cuentas del sistema.
 
@@ -212,7 +214,7 @@ Los demás usuarios no tienen permisos sobre el archivo.
 Esta diferencia de permisos es importante porque `/etc/shadow` contiene
 información sensible relacionada con la autenticación de los usuarios.
 
-### 2.4 Directorio personal
+### **2.4 Directorio personal**
 
 La cuenta lucacoss tiene como directorio personal:
 
@@ -259,7 +261,7 @@ La ruta correcta del directorio personal es:
 Este caso permitió comprobar en la práctica la diferencia entre una ruta
 relativa y una ruta absoluta.
 
-### 2.5 Creacion de un usuario
+### **2.5 Creacion de un usuario**
 
 Vamos a crear un usuario llamado: `labuser`.
 
@@ -285,7 +287,7 @@ sudo passwd labuser
 
 Con esto, el sistema va a pedir dos veces la clave, para establecerla correctamente. 
 
-### 2.6 Validacion de la creacion del usuario
+### **2.6 Validacion de la creacion del usuario**
 
 Ahora vamos a proceder a validar que todo se haya creado correctamente
 
@@ -337,7 +339,7 @@ getent passwd labuser
 
 Por ende todo se realizo correctamente. 
 
-### 2.7 Creacion de grupos secundarios
+### **2.7 Creacion de grupos secundarios**
 
 Creemos un grupo específico para nuestro laboratorio:
 
@@ -378,7 +380,7 @@ uid=1001(labuser) gid=1001(labuser) groups=1001(labuser),1002(syslab)
 labuser : labuser syslab
 ```
 
-### 2.8 Diferencia entre usuarios
+### **2.8 Diferencia entre usuarios**
 
 Algo que podemos mostrar es la diferencia que hay entre los usuarios `lucacoss` y `labuser`. Si nosotros entramos temporalmente a labuser con 
 
@@ -400,7 +402,7 @@ Despues salimos con `exit`.
 
 Como `labuser` no esta en el grupo `sudo` no tiente aquellos permisos.
 
-### 2.9 Modificacion del usuario
+### **2.9 Modificacion del usuario**
 
 Aca podemos realizar modificaciones como:
 
@@ -444,7 +446,9 @@ sudo passwd -u labuser
 
 De esta manera podemos deshabilitar temporalmente la autenticación mediante la clave de una cuenta sin eliminarla, lo que puede utilizarse como una forma de baja lógica.
 
-## 3. Permisos, propietarios y grupos
+---
+
+## **3. Permisos, propietarios y grupos**
 
 En Linux, cada archivo y directorio tiene principalmente:
 * un propietario;
@@ -465,10 +469,7 @@ El motivo es que `/opt` es un lugar apropiado para software o recursos adicional
 
 ``` bash
 ls -ld /opt/syslab
-```
-
-``` text
-drwxr-xr-x 2 root root 4096 Oct 1 00:09
+    drwxr-xr-x 2 root root 4096 Oct 1 00:09
 ```
 
 Aca podemos hacer un analisis basico de permisos:
@@ -500,7 +501,7 @@ Aca podemos hacer un analisis basico de permisos:
 | `w` | write — escritura |
 | `x` | execute — ejecución |
 
-### 3.1 Cambiar propietarios
+### **3.1 Cambiar propietarios**
 
 El comando `chown` significa **Change owner**
 
@@ -512,10 +513,7 @@ Y lo verificamos
 
 ``` bash
 ls -ld /opt/syslab
-```
-
-``` text
-drwxr-xr-x 2 labuser root 4096 Oct 1 00:09
+    drwxr-xr-x 2 labuser root 4096 Oct 1 00:09
 ```
 
 Y despues esta el comando `chgrp` que significa **Change group**
@@ -527,11 +525,8 @@ sudo chgrp syslab /opt/syslab
 Y lo verificamos 
 
 ``` bash
-ls -ld /opt/syslab
-```
-
-``` text
-drwxr-xr-x 2 labuser syslab 4096 Oct 1 00:09
+ls -ld /opt/syslab  
+    drwxr-xr-x 2 labuser syslab 4096 Oct 1 00:09
 ```
 
 También podríamos haber realizado ambas operaciones mediante `chown`:
@@ -540,7 +535,7 @@ También podríamos haber realizado ambas operaciones mediante `chown`:
 sudo chown labuser:syslab /opt/syslab
 ```
 
-### 3.2 Modificacion de permisos
+### **3.2 Modificacion de permisos**
 
 En esta seccion vamos a usar `chmod`
 
@@ -595,7 +590,7 @@ Entonces si realizamos una practica como:
 
 ![Practica de permisos](../../../screenshots/system/img04.png)
 
-### 3.3 Interaccion entre usuarios, grupos y permisos
+### **3.3 Interaccion entre usuarios, grupos y permisos**
 
 Vamos a empezar con unos comandos
 
@@ -778,7 +773,7 @@ echo "Modificacion realizada por labuser" >> /opt/syslab/archivo-devuser.txt
 
 La operación se realizó correctamente. Esto demuestra que `labuser` puede modificar un archivo creado por `devuser` cuando ambos pertenecen al grupo propietario y el archivo concede escritura al grupo.
 
-El operador `>>` agrega texto al final del archivo sin reemplazar su contenido existente.
+El operador `>>` agrega texto al final del archivo sin reemplazar su contenido existente (A diferencia de `>`).
 
 ### **Conclusión de la práctica**
 
@@ -828,16 +823,7 @@ Estos son los resultados habituales para archivos regulares y directorios cuando
 
 #### **3.5.1 Creación de un archivo**
 
-Ahora ingresamos como `devuser` y verificamos su `umask`:
-
-```bash
-su - devuser
-umask
-```
-
-El resultado fue `0002`.
-
-Creamos un archivo dentro del directorio compartido:
+Ahora ingresamos como `devuser` y csudoreamos un archivo dentro del directorio compartido:
 
 ```bash
 touch /opt/syslab/prueba-umask.txt
@@ -881,7 +867,7 @@ En esta práctica comprobamos que `umask` y `setgid` cumplen funciones diferente
 
 La combinación de ambos mecanismos permite preparar directorios compartidos de manera más consistente, aunque todavía debemos comprobar cómo se comportan las modificaciones de archivos y los comandos ejecutados mediante `sudo`.
 
-### 3.6 Prueba de colaboración entre usuarios
+### **3.6 Prueba de colaboración entre usuarios**
 
 Una vez configurado el directorio compartido `/opt/syslab`, se realizó una prueba para verificar que los usuarios `devuser` y `labuser` pudieran trabajar sobre un mismo archivo.
 
@@ -919,7 +905,162 @@ El funcionamiento se debe a la combinación de varios mecanismos:
 
 La prueba demuestra cómo configurar un espacio de trabajo compartido en Linux para que distintos usuarios colaboren sobre los mismos archivos sin necesidad de utilizar la cuenta `root` para cada operación.
 
-## 4. Sistema de archivos
+---
+
+## **4. Sistema de archivos**
+
+### **4.1 Introduccion**
+En Linux, todo parte de un directorio raíz representado por /. No debe confundirse con /root, que es el directorio personal del usuario administrador.
+
+Esta es una primera referencia de los directorios que conviene conocer:
+
+| Directorio |	Función principal |
+|---|---|
+| `/`    | Raíz de toda la jerarquía de directorios. |
+| `/home`| Directorios personales de los usuarios comunes. |
+| `/root`| Directorio personal de root. |
+| `/etc` | Archivos de configuración del sistema y de servicios. |
+| `/var` | Datos variables: registros, cachés, colas y otros datos de servicios. |
+| `/usr` | Gran parte de los programas, bibliotecas y recursos instalados. |
+| `/opt` | Software adicional y aplicaciones instaladas fuera de la distribución habitual. |
+| `/tmp` | Archivos temporales; su limpieza depende de la configuración del sistema. |
+| `/dev` | Archivos de dispositivo que representan interfaces con dispositivos y recursos del sistema. |
+| `/proc`| Sistema de archivos virtual que expone información de procesos y del kernel. |
+| `/sys` | Información e interfaces del kernel relacionadas con dispositivos y otros objetos del sistema. |
+| `/mnt` | Punto de montaje convencional para montajes temporales o administrativos. |
+| `/media`| Punto de montaje convencional para medios extraíbles. |
+| `/boot`| Archivos necesarios para el arranque, como kernels e imágenes de inicio. |
+
+> Estas funciones son las habituales; los contenidos concretos pueden variar según la distribución y los servicios instalados.
+
+Vamos a ejercutar unos comandos sencillos para saber como orientarnos mejor
+
+``` bash
+pwd
+ls -la /
+ls -la /home
+findmnt /
+df -h /
+```
+
+* `pwd` indica en qué directorio estás ubicado.
+
+* `ls -la /` muestra el contenido de la raíz, incluidos los elementos ocultos.
+
+* `findmnt /` permite identificar qué sistema de archivos está montado en `/`.
+
+``` text
+TARGET SOURCE     FSTYPE OPTIONS
+/      /dev/sda2  ext4   rw,relatime
+```
+
+> `/dev/sda2` es una partición del disco virtual que utiliza tu máquina virtual. No es un directorio, sino un dispositivo de bloques que contiene el sistema de archivos.
+
+* `df -h /` muestra el espacio total, utilizado y disponible del sistema de archivos que contiene la raíz.
+
+``` text
+Filesystem   Size  Used  Avail  Use%  Mounted on
+/dev/sda2     25G   5.7G   18G    25%  /
+```
+
+![Repuesta de los comandos](../../../screenshots/system/img05.png)
+
+## **4.2 Rutas Relativas/Absolutas**
+
+Antes de estudiar todos los directorios, vamos a dominar cómo movernos entre ellos. Esto también se relaciona con lo que te ocurrió anteriormente al intentar consultar una ruta relativa cuando querías acceder a `/home/lucacoss`.
+Una ruta absoluta comienza desde `/`. Una ruta relativa se interpreta desde tu directorio actual.
+
+Por ejemplo, si nos posicionamos en `/home/lucacoss`:
+
+| Comando o ruta |	Significado |
+|---|---|
+| `/etc` | Ruta absoluta al directorio de configuración. |
+| Documents | Directorio Documents dentro de tu ubicación actual, si existe. |
+| `..` | Directorio padre. |
+| `.`  | Directorio actual. |
+| `~`  | Directorio personal del usuario actual en una shell habitual. |
+
+Despues hay comandos interesantes como `realpath` que permite obtener una ruta absoluta para una ruta existente, resolviendo componentes como `.` y `..`.
+
+### **4.2 Jerarquia de directorios**
+
+En Linux, todos los archivos y directorios se organizan a partir de la raíz `/`. No existen letras de unidad como C: o D: al estilo de Windows. Otros discos y particiones se incorporan a la jerarquía mediante puntos de montaje.
+
+## Directorios fundamentales
+
+### `/etc` — Configuración del sistema
+Contiene archivos de configuración del sistema operativo y de los servicios instalados. Generalmente son archivos de texto que definen cómo deben comportarse los distintos componentes.
+
+Ejemplos importantes:
+
+| Ruta | Función |
+|---|---|
+|`/etc/passwd	`| Información básica de las cuentas de usuario. |
+|`/etc/shadow	`| Información protegida relacionada con las contraseñas. |
+|`/etc/group	`| Información de los grupos locales. |
+|`/etc/hostname	`| Nombre del equipo. |
+|`/etc/hosts	`| Asociaciones locales entre nombres y direcciones IP. |
+|`/etc/fstab	`| Configuración de sistemas de archivos que pueden montarse automáticamente. |
+|`/etc/ssh/sshd_config` | Configuración del servidor SSH, si está instalado. |
+|`/etc/systemd/`	| Configuración de diversos componentes de systemd. |
+
+Ejemplo práctico: si necesitás revisar la configuración del servidor SSH, buscarías sus archivos en `/etc/ssh/`.
+
+``` bash
+ls -ld /etc/ssh/
+```
+
+### `/var` — Datos variables
+
+El directorio `/var` almacena información que cambia durante el funcionamiento del sistema. Es especialmente importante en servidores porque ahí suelen crecer los registros, las cachés y los datos de aplicaciones.
+
+|Ruta |	Función |
+|---|---|
+| `/var/log/` |	Registros del sistema y de las aplicaciones. |
+| `/var/cache/` |	Datos de caché que pueden regenerarse. |
+| `/var/lib/` |	Estado persistente de aplicaciones y servicios. |
+| `/var/spool/` |	Datos pendientes de procesamiento, como colas de trabajos. |
+| `/var/tmp/` |	Archivos temporales que, según las convenciones del sistema, pueden conservarse más tiempo que los de /tmp. |
+| `/var/log/journal/` |	Ubicación posible de registros persistentes de systemd-journald. |
+
+Ejemplos de administración:
+- Si el disco se llena, revisar `/var/log` puede ayudar a detectar registros que crecieron demasiado.
+- Si una aplicación pierde su estado al reiniciarse, conviene conocer qué guarda en `/var/lib`.
+- Si usás `apt`, sus cachés y datos de paquetes pueden ocupar espacio bajo `/var`.
+
+``` bash
+ls -ld /var/log /var/cache /var/lib
+```
+
+### `/usr` — Programas, bibliotecas y recursos
+
+`/usr` contiene gran parte de los programas, bibliotecas y recursos instalados en el sistema. 
+
+| Ruta | Función |
+|---|---|
+| `/usr/bin/  `| Gran parte de los comandos y programas de usuario. |
+| `/usr/sbin/ `| Herramientas administrativas; la separación respecto de /usr/bin depende de la distribución. |
+| `/usr/lib/`  | Bibliotecas y componentes de software. |
+| `/usr/share/`| Datos compartidos independientes de la arquitectura, como documentación. |
+| `/usr/local/`| Software instalado localmente por el administrador, fuera de la gestión habitual de paquetes de la distribución. |
+
+Por ejemplo, el comando `ls` suele encontrarse en `/usr/bin/ls`.
+
+``` bash
+command -v ls
+ls -ld /usr/bin /usr/lib /usr/share /usr/local
+```
+
+### `/opt` — Software adicional
+
+`/opt` se utiliza convencionalmente para paquetes de software adicionales. Es una ubicación apropiada para determinadas aplicaciones que mantienen sus propios directorios de instalación.
+
+``` bash
+ls -ld /opt
+ls -ld /opt/syslab
+```
+
+FALTAN DIRECTORIOS
 
 ## 5. Procesos
 
