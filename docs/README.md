@@ -23,5 +23,8 @@ Ejemplos:
 ```text
 docs/
 ├── README.md
-└── decisions.md
+└── 01-decisions.md
+└── 02-validacion-inicial-paquetes.md
+└── 03-usuarios-grupos.md
+└── 04-directorios.md
 ```
