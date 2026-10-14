@@ -51,6 +51,8 @@ Aca podemos hacer un analisis basico de permisos:
 | `w` | write — escritura |
 | `x` | execute — ejecución |
 
+> El permiso w del directorio permite crear, eliminar o renombrar entradas —en combinación con los permisos necesarios para acceder al directorio—.
+
 ## **3.1 Cambiar propietarios**
 
 El comando `chown` significa **Change owner**
