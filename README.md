@@ -27,7 +27,19 @@ Los principales objetivos son:
 
 ---
 
-## Tecnologías y herramientas
+## Estado actual
+
+* Las desiciones de [arquitectura](./architecture/architecture.md) ya fueron tomadas 
+
+* `srv-linux01` fue instalado y levantado correctamente. [Instalacion](./server/srv-linux01/installation/README.md)
+
+* Se levantaron nuevos usuarios en `srv-linux01`. [Explicacion](./server/srv-linux01/system/README.md)
+
+* Se levanto la documentacion, donde se explican conceptos teoricos o mas abstractos. [Documentacion](./docs/README.md)
+
+---
+
+## Tecnologías y herramientas incorporadas e instaladas
 
 ### Virtualización
 
@@ -46,6 +58,8 @@ Los principales objetivos son:
 - SSH
 - UFW
 - herramientas GNU/Linux
+
+## Tecnlogias y herramientas planificadas
 
 ### Servicios
 

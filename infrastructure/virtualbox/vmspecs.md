@@ -32,9 +32,7 @@ Este documento registra las especificaciones de las máquinas virtuales utilizad
 
 ### Estado
 
-**Planificado / pendiente de implementación.**
-
-La configuración real deberá verificarse después de crear la VM.
+**Implementado y funcionando**
 
 ---
 

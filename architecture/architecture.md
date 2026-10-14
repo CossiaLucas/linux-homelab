@@ -25,11 +25,11 @@ La arquitectura debe permitir agregar nuevos componentes sin necesidad de recons
 
 # 2. Arquitectura inicial
 
-La primera versión del laboratorio estará compuesta por una única máquina virtual.
+La primera versión del laboratorio esta compuesta por una única máquina virtual.
 
 ![Representacion de la arquitectura](./architecture.png)
 
-# 3. Maquina virtual inicial
+# 2.1 Maquina virtual inicial
 
 | Parámetro         | Valor                   |
 | ----------------- | ----------------------- |
@@ -41,3 +41,7 @@ La primera versión del laboratorio estará compuesta por una única máquina vi
 | RAM               | 2 GB                    |
 | Disco             | 25 GB                   |
 | Red inicial       | NAT                     |
+
+# 3. Arquitectura futura
+
+En las siguientes versiones se dispondran de mas servidores que se complementaran entre ellos

@@ -4,7 +4,7 @@ Documentación correspondiente a la instalación del sistema operativo en `srv-l
 
 ---
 
-## Objetivo
+## Objetivo (`Alcanzado`)
 
 Instalar Ubuntu Server 26.04 LTS en una máquina virtual de VirtualBox y dejar preparado el servidor para las siguientes etapas del Homelab.
 

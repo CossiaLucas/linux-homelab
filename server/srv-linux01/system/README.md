@@ -43,6 +43,8 @@ sudo apt upgrade
 
 ![Respuesta del upgrade](../../../screenshots/system/img02.png)
 
+El funcionamiento de estos comandos los detallamos en [docs](../../../docs/README.md)
+
 ---
 
 ## **2. Usuarios y grupos**
@@ -1060,7 +1062,124 @@ ls -ld /opt
 ls -ld /opt/syslab
 ```
 
-FALTAN DIRECTORIOS
+### `/home` y `/root` — Directorios personales
+
+`/home` contiene habitualmente los directorios personales de los usuarios comunes. Cada usuario puede almacenar ahí sus documentos, configuraciones personales y otros archivos. En este servidor:
+
+``` text
+/home/lucacoss
+/home/labuser
+/home/devuser
+```
+
+`/root`, en cambio, es el directorio personal de la cuenta de administración root. No es la raíz del sistema: esa es /.
+
+Podés comprobar las rutas existentes con:
+
+``` bash
+ls -ld /home /home/lucacoss /root
+```
+
+La consulta de `/root` puede mostrar permisos restrictivos, lo cual es normal.
+
+### `/tmp` y `/var/tmp` — Archivos temporales
+
+Ambos directorios permiten guardar información temporal, pero existe una diferencia convencional:
+
+- `/tmp` se utiliza para archivos temporales que pueden eliminarse durante el arranque o por tareas de limpieza.
+- `/var/tmp` se destina a archivos temporales que, en general, deben poder persistir durante más tiempo.
+
+La política exacta depende de la distribución y su configuración. No asumas que todo lo que está en /tmp desaparece inmediatamente al reiniciar.
+Podés inspeccionar sus permisos con:
+
+``` bash
+ls -ld /tmp /var/tmp
+```
+
+Es habitual encontrar permisos como `drwxrwxrwt` en estos directorios. La `t` final indica el sticky bit, que restringe quién puede eliminar o renombrar entradas en un directorio compartido.
+Ese es uno de los usos prácticos de los permisos especiales que vimos anteriormente.
+
+### `/dev` — Dispositivos
+
+Linux representa muchos dispositivos mediante archivos especiales bajo `/dev`. No son archivos ordinarios que contengan datos de la manera habitual.
+Ejemplos comunes:
+
+- /dev/sda: un dispositivo de bloques, como un disco.
+- /dev/sda2: una partición de ese disco.
+- /dev/null: descarta los datos escritos en él.
+- /dev/zero: proporciona bytes nulos al leerlo.
+- /dev/tty: representa el terminal asociado al proceso, cuando corresponde.
+
+En este servidor, vemos `/dev/sda2` en la salida de findmnt `/`. Esa partición contiene el sistema de archivos raíz.
+Para comprobar algunos dispositivos:
+
+```bash
+ls -l /dev/null /dev/zero
+ls -l /dev/sda /dev/sda2
+```
+
+Los últimos elementos pueden variar según la configuración y los dispositivos que exponga la máquina virtual.
+
+### `/boot` — Archivos de arranque
+
+Contiene archivos necesarios para iniciar el sistema, como kernels e imágenes de inicio. Para inspeccionarlo:
+
+``` bash
+ls -lh /boot
+```
+
+Su contenido depende de la distribución, el kernel instalado y la configuración del arranque. No conviene borrar manualmente archivos de este directorio: una limpieza incorrecta puede dejar el sistema sin poder arrancar.
+
+### `/mnt` y `/media` — Puntos de montaje
+
+Son ubicaciones convencionales para montar sistemas de archivos:
+
+- /mnt: suele utilizarse para montajes temporales o administrativos.
+- /media: suele utilizarse para medios extraíbles.
+
+Un punto de montaje es un directorio donde se hace accesible el contenido de otro sistema de archivos. El contenido que había debajo del directorio antes del montaje queda oculto mientras el montaje está activo. Para consultar los montajes actuales:
+
+``` bash
+findmnt
+```
+
+## Practica sobre directorios fundamentales
+
+1. Identificar el hostname 
+
+``` bash
+cat /etc/hostnmae
+```
+
+2. Examinar el espacio de los logs
+
+``` bash
+sudo du -sh /var/logs
+```
+
+3. Localizar el comando `ls`
+
+``` bash
+command -v ls
+```
+
+4. Consultar los permisos de `/tmp`
+
+```bash
+ls -ld /tmp
+```
+
+5. Ver las interfaces de red
+
+``` bash
+ls /sys/class/net
+```
+
+6. Examinar los puntos de montaje
+
+```bash
+finmnt
+```
 
 ## 5. Procesos
 

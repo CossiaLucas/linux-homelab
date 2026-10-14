@@ -2,8 +2,6 @@
 
 Servidor Linux principal del Homelab.
 
-Esta máquina representa el primer servidor del laboratorio y será utilizada para practicar administración de sistemas, networking, seguridad, servicios y automatización.
-
 ---
 
 ## Información
@@ -21,9 +19,7 @@ Esta máquina representa el primer servidor del laboratorio y será utilizada pa
 
 ---
 
-## Objetivos
-
-El servidor será utilizado para practicar:
+## Objetivos ya alcanzados
 
 - Instalación de Linux.
 - Administración del sistema.
@@ -33,6 +29,11 @@ El servidor será utilizado para practicar:
 - Servicios.
 - systemd.
 - Logs.
+
+## Objetivos futuros
+
+El servidor será utilizado para practicar:
+
 - Networking.
 - SSH.
 - Firewall.
