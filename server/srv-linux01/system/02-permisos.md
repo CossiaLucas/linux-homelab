@@ -206,7 +206,7 @@ El problema es que todavía no tenemos otro usuario utilizando ese grupo. Así q
 
 Hasta este punto, el directorio `/opt/syslab` tenía el bit `setgid` activado, pero el grupo `syslab` no disponía de permiso de escritura sobre el directorio.
 
-Por eso, aunque `devuser` (Otro usuario creado para la prueba, con la caracteristica de que pertenece a `syslab`) pertenecía a `syslab`, no podía crear nuevos archivos dentro de él.
+Por eso, aunque `devuser` pertenecía a `syslab`, no podía crear nuevos archivos dentro de él.
 
 Para permitir que los integrantes del grupo creen archivos, modificamos los permisos del directorio:
 

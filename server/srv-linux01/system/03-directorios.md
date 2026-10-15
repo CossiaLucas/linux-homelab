@@ -38,13 +38,13 @@ Filesystem   Size  Used  Avail  Use%  Mounted on
 1. Identificar el hostname 
 
 ``` bash
-cat /etc/hostnmae
+cat /etc/hostname
 ```
 
 2. Examinar el espacio de los logs
 
 ``` bash
-sudo du -sh /var/logs
+sudo du -sh /var/log
 ```
 
 3. Localizar el comando `ls`
@@ -68,5 +68,5 @@ ls /sys/class/net
 6. Examinar los puntos de montaje
 
 ```bash
-finmnt
+findmnt
 ```

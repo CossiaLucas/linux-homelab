@@ -21,14 +21,13 @@ Servidor Linux principal del Homelab.
 
 ## Objetivos ya alcanzados
 
-- Instalación de Linux.
-- Administración del sistema.
-- Usuarios y grupos.
-- Permisos.
-- Procesos.
-- Servicios.
-- systemd.
-- Logs.
+* [Instalacion de srv-linux01](./server/srv-linux01/installation/README.md)
+
+* [Se levantaron nuevos usuarios](.\server\srv-linux01\system\01-usuarios-grupos.md)
+
+* [Se verificaron permisos](.\server\srv-linux01\system\02-permisos.md)
+
+* [Se verificaron algunos directorios](.\server\srv-linux01\system\03-directorios.md)
 
 ## Objetivos futuros
 

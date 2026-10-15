@@ -29,13 +29,11 @@ Los principales objetivos son:
 
 ## Estado actual
 
-* Las desiciones de [arquitectura](./architecture/architecture.md) ya fueron tomadas 
+* Se levanto la [Documentacion](./docs/README.md)
 
-* `srv-linux01` fue instalado y levantado correctamente. [Instalacion](./server/srv-linux01/installation/README.md)
+* Las [Desiciones de arquitectura](./architecture/architecture.md) ya fueron tomadas 
 
-* Se levantaron nuevos usuarios en `srv-linux01`. [Explicacion](./server/srv-linux01/system/README.md)
-
-* Se levanto la documentacion, donde se explican conceptos teoricos o mas abstractos. [Documentacion](./docs/README.md)
+* Actualmente estoy trabajando en levantar el srv-linux01
 
 ---
 

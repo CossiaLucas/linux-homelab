@@ -151,7 +151,7 @@ ls -ld /home/labuser
 Y finalmente su shell asociado:
 
 ``` bash
-getent passwd labuser
+getent passwd labuser | cut -d: -f7
     /bin/bash
 ```
 
@@ -229,3 +229,13 @@ sudo passwd -u labuser
 ```
 
 De esta manera podemos deshabilitar temporalmente la autenticación mediante la clave de una cuenta sin eliminarla, lo que puede utilizarse como una forma de baja lógica.
+
+---
+
+Finalmente vamos a crear a un segundo usuario para pruebas posteriores.
+
+``` bash
+sudo useradd -m -s /bin/bash devuser
+sudo usermod -aG syslab devuser
+sudo passwd devuser
+```
