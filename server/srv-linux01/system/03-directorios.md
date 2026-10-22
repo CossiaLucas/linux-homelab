@@ -44,7 +44,7 @@ lsblk -f
 findmnt -T /home/lucacoss
 ```
 
-[Respuesta de los comandos](../../../screenshots/system/img06.png)
+![Respuesta de los comandos](../../../screenshots/system/img06.png)
 
 Aca podemos evaluar varias cosas:
 
